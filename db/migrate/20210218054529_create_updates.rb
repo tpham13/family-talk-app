@@ -1,8 +1,8 @@
 class CreateUpdates < ActiveRecord::Migration[6.0]
   def change
-    create_table :updates do |t|
+    create_table :posts do |t|
       t.string :content
-      t.belongs_to :user
+      t.references :user
 
       t.timestamps
     end
