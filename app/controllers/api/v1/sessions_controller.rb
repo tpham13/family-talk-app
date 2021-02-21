@@ -14,6 +14,14 @@ class Api::V1::SessionsController < ApplicationController
         
     end
 
-    # def 
-    # end 
+    # to call this method, we 
+    def get_current_user
+        if logged_in?
+            render json: @user
+        else
+            render json: {
+                error: "No one is logged in"
+            }
+        end
+    end 
 end
