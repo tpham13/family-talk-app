@@ -17,11 +17,11 @@ class Api::V1::SessionsController < ApplicationController
     # to call this method, we 
     def get_current_user
         if logged_in?
-            render json: @user
+          render json: UserSerializer.new(current_user)
         else
-            render json: {
-                error: "No one is logged in"
-            }
+          render json: {
+            error: "No one logged in"
+          }
         end
     end 
 end
