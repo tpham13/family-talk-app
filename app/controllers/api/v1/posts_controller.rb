@@ -2,9 +2,16 @@ class Api::V1::PostsController < ApplicationController
 
       # GET /groups
   def index
-    @posts = Post.all
+    if logged_in? 
+      @posts = current_user.posts
 
-    render json: @posts
+      render json: @posts
+    else 
+      render json: { 
+        error: "You must be logged in to see posts"
+       }
+    end 
+   
   end
 
   # GET /groups/1
