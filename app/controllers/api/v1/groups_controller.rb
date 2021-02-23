@@ -5,12 +5,12 @@ class Api::V1::GroupsController < ApplicationController
   def index
     @groups = Group.all
 
-    render json: @groups
+    render json: GroupSerializer.new(@groups)
   end
 
   # GET /groups/1
   def show
-    render json: @group
+    render json: GroupSerializer.new(@group)
   end
 
   # POST /groups
