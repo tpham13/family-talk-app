@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_18_193516) do
+ActiveRecord::Schema.define(version: 2021_02_23_055822) do
 
   create_table "comments", force: :cascade do |t|
     t.string "content"
@@ -33,6 +33,8 @@ ActiveRecord::Schema.define(version: 2021_02_18_193516) do
     t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "group_id"
+    t.index ["group_id"], name: "index_posts_on_group_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
@@ -61,6 +63,7 @@ ActiveRecord::Schema.define(version: 2021_02_18_193516) do
 
   add_foreign_key "comments", "posts"
   add_foreign_key "comments", "users"
+  add_foreign_key "posts", "groups"
   add_foreign_key "recipes", "groups"
   add_foreign_key "recipes", "users"
 end
