@@ -3,7 +3,7 @@ class Api::V1::PostsController < ApplicationController
       # GET /groups
   def index
     if logged_in? 
-      @posts = current_user.posts
+      @posts = current_user.group.posts
 
       render json: PostSerializer.new(@posts)
     else 
