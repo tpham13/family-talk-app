@@ -24,6 +24,7 @@ class Api::V1::UsersController < ApplicationController
     @user.group = @group
     # byebug
     if @user.save
+      session[:user_id] = @user.id
       render json: UserSerializer.new(@user), status: :created
     else
       resp = { 
