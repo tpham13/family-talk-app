@@ -1,10 +1,10 @@
 class Api::V1::UsersController < ApplicationController
+  # skip_before_action :verify_authenticity_token
   before_action :set_user, only: [:show, :update, :destroy]
 
   # GET /users
   def index
     @users = User.all
-
     # render json: @users
     users_json = UserSerializer.new(@users).serialized_json
     render json: users_json
@@ -20,10 +20,15 @@ class Api::V1::UsersController < ApplicationController
   # POST /users
   def create
     @user = User.new(user_params)
-
+    @group = Group.find_or_create_by(name: params[:user][:group][:name])
+    @user.group = @group
+    # byebug
     if @user.save
-      render json: @user, status: :created, location: @user
+      render json: UserSerializer.new(@user), status: :created
     else
+      resp = { 
+        error: @user.errors.full_messages.to_sentence
+       }
       render json: @user.errors, status: :unprocessable_entity
     end
   end
@@ -50,6 +55,6 @@ class Api::V1::UsersController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def user_params
-      params.require(:user).permit(:name, :username, :password_digest)
+      params.require(:user).permit(:name, :username, :password)
     end
 end
