@@ -1,5 +1,5 @@
 class Group < ApplicationRecord
     has_many :users
     has_many :recipes
-    has_many :posts
+    has_many :posts, through: :users
 end

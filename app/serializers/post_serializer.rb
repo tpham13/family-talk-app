@@ -1,5 +1,5 @@
 class PostSerializer
   include FastJsonapi::ObjectSerializer
-  attributes :content, :group, :user
+  attributes :content, :user, :group
 
 end
