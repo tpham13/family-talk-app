@@ -1,11 +1,11 @@
 class Api::V1::PostsController < ApplicationController
   before_action :set_post, only: [:show, :update, :destroy]
   
+
   # GET /groups
   def index
     if logged_in? 
       @posts = current_user.group.posts
-
       render json: PostSerializer.new(@posts)
     else 
       render json: { 
@@ -36,6 +36,19 @@ class Api::V1::PostsController < ApplicationController
       render json: error_resp, status: :unprocessable_entity
     end
   end
+
+  def update 
+
+    if @post.update(post_params)
+      render json:  PostSerializer.new(@post), status: :ok
+    else
+      error_resp = {
+        error: @post.errors.full_messages.to_sentence
+      }
+      render json: error_resp, status: :unprocessable_entity
+    end
+  end 
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
