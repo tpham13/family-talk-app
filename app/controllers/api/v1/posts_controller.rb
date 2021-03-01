@@ -52,6 +52,18 @@ class Api::V1::PostsController < ApplicationController
     end
   end 
 
+  def destroy
+    if @post.destroy 
+      render json: {data: "Trip successfully destroyed"}, status: :ok
+
+    else
+      error_resp = { 
+        error: "Post not found and destroyed"
+       }
+      render json: error_resp, status: :unprocessable_entity
+    end
+
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
