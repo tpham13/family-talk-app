@@ -19,12 +19,15 @@ class Api::V1::PostsController < ApplicationController
   # GET /groups/1
   def show
     render json: PostSerializer.new(@post)
+    # render json: @post
+
   end
 
   # POST /posts
 
   def create
     # byebug
+    # built automatically associate the obj id from the left as the corsresponding id 
     @post = current_user.posts.build(post_params)
 
     if @post.save
@@ -58,7 +61,9 @@ class Api::V1::PostsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def post_params
-      params.require(:post).permit(:content, :user_id)
+      # deleted :use_id in permit params b/c I use build method to associate current_user 
+      # when creating a new post in create method
+      params.require(:post).permit(:content)
     end
 
 end
