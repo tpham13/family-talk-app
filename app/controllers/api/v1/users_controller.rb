@@ -20,7 +20,7 @@ class Api::V1::UsersController < ApplicationController
   # POST /users
   def create
     @user = User.new(user_params)
-    @group = Group.find_or_create_by(name: params[:user][:group][:name])
+    @group = Group.find_or_create_by(group_name: params[:user][:group][:group_name])
     @user.group = @group
     # byebug
     if @user.save

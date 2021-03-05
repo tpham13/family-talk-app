@@ -1,6 +1,6 @@
 class GroupSerializer
   include FastJsonapi::ObjectSerializer
-  attributes :name
-  has_many :posts, serializer: PostSerializer
+  attributes :group_name
+  has_many :posts through: :users, serializer: PostSerializer
   has_many :users, serializer: UserSerializer
 end

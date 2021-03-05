@@ -46,6 +46,6 @@ class Api::V1::GroupsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def group_params
-      params.require(:group).permit(:name)
+      params.require(:group).permit(:group_name)
     end
 end
