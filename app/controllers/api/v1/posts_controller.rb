@@ -1,6 +1,6 @@
 class Api::V1::PostsController < ApplicationController
   before_action :set_post, only: [:show, :update, :destroy]
-  
+  # before_action :require_permission, only: [:update, :destroy]
 
   # GET /groups
   def index
@@ -41,31 +41,31 @@ class Api::V1::PostsController < ApplicationController
   end
 
   def update 
+    if logged_in? && current_user.posts.include?(@post) && @post.update(post_params)
 
-    if @post.update(post_params)
+   
       render json:  PostSerializer.new(@post), status: :ok
     else
-      error_resp = {
-        error: @post.errors.full_messages.to_sentence
-      }
+      error_resp = { 
+        error: "Post is not your to edit"
+       }
       render json: error_resp, status: :unprocessable_entity
     end
   end 
 
   def destroy
     # byebug
-    if @post.destroy 
-      render json: {data: "Trip successfully destroyed"}, status: :ok
+    if logged_in? && current_user.posts.include?(@post)
+    @post.destroy
+      render json: {data: "Post successfully destroyed"}, status: :ok
 
     else
       
       error_resp = { 
-        error: "Post not found and destroyed"
+        error: "Post is not your to delete"
        }
       render json: error_resp, status: :unprocessable_entity
     end
-
-
   end
 
   private
@@ -74,6 +74,13 @@ class Api::V1::PostsController < ApplicationController
       @post = Post.find(params[:id])
     end
 
+    # def require_permission
+    #   @post = Post.find(params[:id]) != current_user.posts
+    #     error_resp = { 
+    #       error: "Post not belong to you to delete"
+    #       render json: error_resp, status: :unprocessable_entity
+    #     }
+    # end 
     # Only allow a trusted parameter "white list" through.
     def post_params
       # deleted :use_id in permit params b/c I use build method to associate current_user 
