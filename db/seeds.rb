@@ -10,7 +10,7 @@
 # widstrom = Group.create(name: "widstrom")
 # ko = Group.create(name: "ko")
 
-# thanh = User.create(name: "thanh", username: "thanhp", password: "1234", group_id: 1)
+# thanh = User.create(name: "thanh", username: "thanhp", password: "1234", group_id: 4)
 # ngan = User.create(name: "ngan", username: "ngank", password: "1234", group_id: 2)
 
 # post1 = Post.create(content: "got a cat", user_id: 1)
@@ -30,11 +30,11 @@
 # post3 = thanh.posts.create(content: "it's a great day")
 # comment3 = thanh.comments.create(content: "it sure is", post: post3)
 
-# post4 = thanh.posts.create(content: "today was a okay", group_id: 1)
+# post4 = thanh.posts.create(content: "today was a okay")
 # comment4 = thanh.comments.create(content: "I think so too!", post: post4)
 
 # chris = User.create(name: "chris", username: "chrisw", password: "1234", group_id: 1)
 # oliver = User.create(name: "oliver", username: "oliverw", password: "1234", group_id: 1)
 
 # post5 = chris.posts.create(content: "I want a puppy", group_id: 1)
-# post5 = oliver.posts.create(content: "I'm going hiking with some friends today", group_id: 1)
+# post5 = oliver.posts.create(content: "I'm going hiking with some friends today", group_id: 1)x

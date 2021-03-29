@@ -1,35 +1,37 @@
 class Api::V1::CommentsController < ApplicationController
   before_action :set_comment, only: [:show, :update, :destroy]
+  before_action :get_post
 
-  # GET /comments
   def index
-    @comments = Comment.all
-
-    render json: @comments
-  end
-
+      @comments = @post.comments
+      render json: CommentSerializer.new(@comments) 
+  end 
+  
   # GET /comments/1
   def show
-    render json: @comment
+    render json: CommentSerializer.new(@comment)
   end
 
-  # POST /comments
   def create
-    @comment = Comment.new(comment_params)
+    @comment = current_user.comments.build(comments_params)
 
     if @comment.save
-      render json: @comment, status: :created, location: @comment
+      render json:  CommentSerializer.new(@comment), status: :created
     else
-      render json: @comment.errors, status: :unprocessable_entity
+      error_resp = {
+        error: @comment.errors.full_messages.to_sentence
+      }
+      render json: error_resp, status: :unprocessable_entity
     end
   end
+  
 
   # PATCH/PUT /comments/1
   def update
     if @comment.update(comment_params)
-      render json: @comment
+      render json: CommentSerializer.new(@comment)
     else
-      render json: @comment.errors, status: :unprocessable_entity
+      render json: CommentSerializer.new(@comment).errors, status: :unprocessable_entity
     end
   end
 
@@ -46,6 +48,11 @@ class Api::V1::CommentsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def comment_params
-      params.require(:comment).permit(:content, :user_id, :update_id)
+      params.require(:comment).permit(:content, :post_id)
+    end
+
+    def get_post
+      @post = Post.find(params[:post_id])
     end
 end
+
