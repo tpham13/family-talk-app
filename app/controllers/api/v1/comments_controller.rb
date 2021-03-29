@@ -9,6 +9,7 @@ class Api::V1::CommentsController < ApplicationController
   
   # GET /comments/1
   def show
+    @comment = @post.comments
     render json: CommentSerializer.new(@comment)
   end
 
