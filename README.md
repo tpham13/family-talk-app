@@ -1,4 +1,6 @@
 # README
+Back end: 
+https://github.com/tpham13/family-talk-frontend
 
 # Family Talk
 
